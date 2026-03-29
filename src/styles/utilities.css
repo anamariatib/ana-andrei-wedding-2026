@@ -1,0 +1,11 @@
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility section-content {
+  @apply max-w-2xl mx-auto py-16 px-6 text-center overflow-hidden;
+}
+
+@utility section-body {
+  @apply w-[90%] mx-auto;
+}

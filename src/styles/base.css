@@ -1,0 +1,24 @@
+@layer base {
+  body {
+    @apply font-serif text-dark-brown text-sm bg-white antialiased tracking-wide;
+
+    background-image:
+      linear-gradient(rgba(250, 250, 248, 0.6), rgba(250, 250, 248, 0.6)),
+      url('/assets/paper-texture.webp');
+    background-repeat: repeat;
+  }
+
+  h1,
+  h2 {
+    @apply font-script leading-tight text-dark-green;
+    @apply mb-1;
+  }
+
+  h1 {
+    @apply text-5xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+}
