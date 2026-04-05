@@ -1,14 +1,15 @@
 @layer components {
-  .btn-base {
-    @apply cursor-pointer antialiased px-8 py-4 mt-4 rounded-xs uppercase tracking-widest text-[11px] font-semibold transition-all duration-500;
+  .btn-solid,
+  .btn-outline {
+    @apply cursor-pointer antialiased px-8 py-4 mt-4 gap-2 rounded-xs uppercase tracking-widest text-[11px] font-semibold transition-all duration-500;
   }
 
   .btn-solid {
-    @apply btn-base bg-dark-green text-white shadow-sm hover:bg-olive-green;
+    @apply bg-dark-green text-white shadow-sm hover:bg-olive-green;
   }
 
   .btn-outline {
-    @apply btn-base border border-dark-brown text-dark-brown bg-transparent hover:bg-cream/12;
+    @apply border border-dark-brown text-dark-brown bg-transparent hover:bg-cream/12;
   }
 
   .btn-outline--active {

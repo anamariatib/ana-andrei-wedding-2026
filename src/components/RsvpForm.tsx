@@ -13,6 +13,7 @@ import {
 import { encodeFormData } from '../utils/netlify';
 import { RSVP_DECORATIONS } from '../constants/images';
 
+// TODO: ERROR STATE + CONFIRMATION MESSAGE 
 export default function RSVPForm() {
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
   const { register, control, handleSubmit, setValue } = useForm<RsvpFormData>({
