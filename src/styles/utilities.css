@@ -1,3 +1,7 @@
+@utility wrapper {
+  @apply overflow-hidden;
+}
+
 @utility flex-center {
   @apply flex items-center justify-center;
 }
@@ -27,7 +31,6 @@
   mask-size: contain;
   mask-repeat: no-repeat;
   mask-position: center;
-  /* mix-blend-mode: multiply; */
 
   -webkit-mask-image: url('/assets/watercolor-splash.svg');
   -webkit-mask-size: contain;

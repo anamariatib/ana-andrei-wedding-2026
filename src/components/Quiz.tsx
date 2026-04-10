@@ -149,7 +149,7 @@ export default function Quiz() {
       whileInView="visible"
       viewport={{ once: true, margin: '-100px' }}
     >
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-visible -z-10">
+      <div className="absolute inset-0 flex-center pointer-events-none overflow-visible -z-10">
         <div className="relative w-full max-w-[800px] h-[700px]">
           <div className="absolute inset-0 bg-cream-darker/20 watercolor-mask rotate-12 scale-125" />
           <div className="absolute inset-0 bg-olive-green/10 watercolor-mask -rotate-12 scale-110" />
