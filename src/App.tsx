@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="wrapper">
       <Events />
-      <Quiz />
       <RSVPForm />
+      <Quiz />
       <Footer />
     </div>
   );

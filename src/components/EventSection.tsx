@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Button from './shared/Button';
 
 interface EventProps {
   title: string;
@@ -18,82 +19,90 @@ export default function EventSection({
   gpsUrl,
   imageUrl,
   imagePosition = 'left',
-}: EventProps) {
+}: Readonly<EventProps>) {
   const isImageLeft = imagePosition === 'left';
 
   return (
-    <section className="max-w-6xl mx-auto p-6 overflow-hidden">
+    <section className="mx-auto my-12 px-6 overflow-hidden max-w-250">
       <div
-        className={`flex flex-col md:items-center md:gap-12 ${isImageLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+        className={`flex flex-col min-[850px]:items-center min-[850px]:justify-between ${
+          isImageLeft ? 'min-[850px]:flex-row' : 'min-[850px]:flex-row-reverse'
+        }`}
       >
-        {/* PARTEA CU IMAGINEA (Watercolor Splash) */}
+        {/* --- ZONA IMAGINE --- */}
         <motion.div
-          className="relative w-full md:w-1/2 flex justify-center"
-          initial={{ opacity: 0, x: isImageLeft ? -50 : 50 }}
+          className="relative w-full flex justify-center min-[850px]:w-[60%]"
+          initial={{ opacity: 0, x: isImageLeft ? -40 : 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: 'easeOut' }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          {/* Fundal decorativ (o pată de acuarelă mai mare și mai transparentă în spate) */}
-          <div className="absolute inset-0 bg-light-green/30 watercolor-mask scale-110 rotate-12 blur-sm" />
+          {/* Decor de fundal (Splash) */}
+          <div className="absolute inset-0 bg-cream-darker/20 watercolor-mask scale-110 rotate-6 blur-sm pointer-events-none" />
 
-          {/* Imaginea Custom cu Mască de Acuarelă */}
-          <div className="relative w-[350px] h-[350px] md:w-[550px] md:h-[450px] watercolor-mask">
+          {/* Container Imagine */}
+          <div className="relative w-[350px] sm:w-[400px] min-[850px]:w-[500px] aspect-square watercolor-mask overflow-hidden shadow-sm">
             <img
               src={imageUrl}
-              alt={title}
-              className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-1000"
+              alt={`Imagine locație ${title}`}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000 ease-in-out"
             />
           </div>
         </motion.div>
 
-        {/* PARTEA CU TEXTUL */}
+        {/* --- ZONA TEXT --- */}
         <motion.div
-          className={`w-full md:w-1/2 text-center ${isImageLeft ? 'md:text-left' : 'md:text-right'}`}
-          initial={{ opacity: 0, x: isImageLeft ? 50 : -50 }}
+          className={`w-full min-[850px]:w-[40%] flex flex-col gap-6 ${
+            isImageLeft
+              ? 'min-[850px]:text-left min-[850px]:items-start'
+              : 'min-[850px]:text-right min-[850px]:items-end'
+          } text-center items-center`}
+          initial={{ opacity: 0, x: isImageLeft ? 40 : -40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.2 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="space-y-6">
-            <h2 className="text-olive-green mb-4">{title}</h2>
+          <div className="max-w-[400px] space-y-3">
+            <h2 className="text-olive-green">{title}</h2>
+
             <div
-              className={`flex items-center gap-4 justify-center ${isImageLeft ? 'md:justify-start' : 'md:justify-end'}`}
+              className={`flex items-center gap-4 justify-center ${
+                isImageLeft
+                  ? 'min-[850px]:justify-start'
+                  : 'min-[850px]:justify-end'
+              }`}
             >
-              <h1 className="font-serif text-2xl md:text-3xl tracking-tighter text-dark-brown">
+              <span className="font-serif text-2xl min-[850px]:text-3xl tracking-tighter text-dark-brown whitespace-nowrap">
                 {time}
-              </h1>
-              <div className="hidden md:block h-px w-12 bg-cream-darker" />
+              </span>
             </div>
 
-            <div className="space-y-1">
-              <h3 className="font-serif font-bold text-dark-brown uppercase tracking-widest">
+            <div className="space-y-2">
+              <h3 className="font-serif font-bold text-dark-brown uppercase tracking-[0.2em] text-sm">
                 {locationName}
               </h3>
-              <p className="font-serif italic text-dark-brown/70">
+              <p className="font-serif italic text-dark-brown/70 text-base leading-relaxed">
                 {locationDetails}
               </p>
             </div>
 
-            <div
-              className={`pt-2 flex justify-center ${isImageLeft ? 'md:justify-start' : 'md:justify-end'}`}
-            >
-              {/* extract button outline into a separate component with animation and icon */}
-              <motion.a
+            <div className="pt-4">
+              <Button
                 href={gpsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-outline flex items-center group"
+                variant="outline"
+                iconLeft={
+                  <img
+                    src="/assets/icons/map-pin.svg"
+                    alt=""
+                    role="presentation"
+                    className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-all"
+                  />
+                }
               >
-                <img
-                  src="/assets/icons/map-pin.svg"
-                  alt="map pin"
-                  className="w-4 h-4 group-hover:mr-2 transition-all mb-0.5"
-                />
-                Vezi pe hartă
-              </motion.a>
+                <span>Vezi pe hartă</span>
+              </Button>
             </div>
           </div>
         </motion.div>

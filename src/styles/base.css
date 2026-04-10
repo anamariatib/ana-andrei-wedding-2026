@@ -19,6 +19,12 @@
   }
 
   h2 {
-    @apply text-5xl md:text-5xl lg:text-6xl;
+    @apply text-[52px] md:text-5xl lg:text-6xl;
+  }
+
+  h3 {
+    @apply font-serif leading-tight text-dark-brown;
+    @apply mb-1;
+    @apply text-base md:text-lg lg:text-xl;
   }
 }

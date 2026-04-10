@@ -13,7 +13,7 @@ import {
 import { encodeFormData } from '../utils/netlify';
 import { RSVP_DECORATIONS } from '../constants/images';
 
-// TODO: ERROR STATE + CONFIRMATION MESSAGE 
+// TODO: ERROR STATE + CONFIRMATION MESSAGE
 export default function RSVPForm() {
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
   const { register, control, handleSubmit, setValue } = useForm<RsvpFormData>({
@@ -102,14 +102,20 @@ export default function RSVPForm() {
             <button
               type="button"
               className={`btn-outline flex-1 basis-[16rem] ${status === RSVP_YES ? 'btn-outline--active' : ''}`}
-              onClick={() => setValue('status', RSVP_YES)}
+              onClick={() => {
+                setValue('status', RSVP_YES);
+                setSubmitMessage(null);
+              }}
             >
               Da, voi participa!
             </button>
             <button
               type="button"
               className={`btn-outline flex-1 basis-[16rem] ${status === RSVP_NO ? 'btn-outline--active' : ''}`}
-              onClick={() => setValue('status', RSVP_NO)}
+              onClick={() => {
+                setValue('status', RSVP_NO);
+                setSubmitMessage(null);
+              }}
             >
               Din păcate, nu pot veni!
             </button>
