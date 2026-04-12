@@ -12,7 +12,9 @@ export interface RsvpFormData {
   guests: {
     name: string;
     dietary: string;
+    ceremony: boolean | null;
   }[];
+  notAttending?: string;
   favoriteSong?: string;
   comments?: string;
 }

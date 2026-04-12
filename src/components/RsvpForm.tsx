@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm, useFieldArray, useWatch } from 'react-hook-form';
 
 import type { SubmitHandler } from 'react-hook-form';
-import type { RsvpFormData } from '../models/RsvpFormData';
+import type { AttendanceStatus, RsvpFormData } from '../models/RsvpFormData';
 
 import {
   NETLIFY_FORM_NAME,
@@ -12,16 +12,60 @@ import {
 } from '../constants/general';
 import { encodeFormData } from '../utils/netlify';
 import { RSVP_DECORATIONS } from '../constants/images';
+import Button from './shared/Button';
+import { containerVariants, itemVariants } from '../utils/animations';
+import { motion, AnimatePresence, type Transition } from 'framer-motion';
+import RSVPSuccess from './RsvpSuccess';
+import RsvpYesForm from './RsvpYesForm';
+import RsvpNoForm from './RsvpNoForm';
 
-// TODO: ERROR STATE + CONFIRMATION MESSAGE
+const formRevealVariants = {
+  hidden: {
+    opacity: 0,
+    height: 0,
+  },
+  visible: {
+    opacity: 1,
+    height: 'auto',
+    transition: {
+      height: { duration: 0.4, ease: 'easeOut' },
+      opacity: { duration: 0.3, delay: 0.1 },
+    } as Transition,
+  },
+};
+
+const STORAGE_KEY = 'wedding-rsvp';
+
 export default function RSVPForm() {
-  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
-  const { register, control, handleSubmit, setValue } = useForm<RsvpFormData>({
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [submittedData, setSubmittedData] = useState<{
+    status: AttendanceStatus;
+    adults: number;
+    children: number;
+  } | null>(() => {
+    if (globalThis.window) {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : null;
+    }
+    return null;
+  });
+  const formSectionRef = useRef<HTMLDivElement>(null);
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    setValue,
+    getValues,
+    clearErrors,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<RsvpFormData>({
     defaultValues: {
       status: RSVP_NA,
       adults: 1,
       children: 0,
-      guests: [{ name: '', dietary: '' }],
+      guests: [{ name: '', dietary: '', ceremony: null }],
       favoriteSong: '',
       comments: '',
     },
@@ -29,30 +73,49 @@ export default function RSVPForm() {
   const { fields, replace } = useFieldArray({ control, name: 'guests' });
   const status = useWatch({ control, name: 'status', defaultValue: RSVP_NA });
   const adults = useWatch({ control, name: 'adults', defaultValue: 1 });
-  const guests = useWatch({
-    control,
-    name: 'guests',
-    defaultValue: [{ name: '', dietary: '' }],
-  });
 
   useEffect(() => {
-    const currentGuests = guests ?? [];
-    const totalGuests = Math.min(adults, 5);
+    clearErrors();
+  }, [status, clearErrors]);
 
-    if (currentGuests.length >= totalGuests) {
+  useEffect(() => {
+    const currentGuests = getValues('guests') || [];
+    const totalGuests = Math.max(1, Math.min(5, adults));
+
+    if (currentGuests.length === totalGuests) {
       return;
     }
 
     const nextGuests = Array.from({ length: totalGuests }, (_, index) => {
-      return currentGuests[index] ?? { name: '', dietary: '' };
+      return currentGuests[index] ?? { name: '', dietary: '', ceremony: false };
     });
 
     replace(nextGuests);
-  }, [adults, guests, replace]);
+  }, [adults, replace, getValues]);
+
+  const onGuestNumberBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const fieldId = e.target.id as 'adults' | 'children';
+    const val = Number.parseInt(e.target.value, 10);
+    const minValue = fieldId === 'adults' ? 1 : 0;
+    if (Number.isNaN(val) || val < minValue) setValue(fieldId, minValue);
+    if (val > 5) setValue(fieldId, 5);
+  };
+
+  const handleReset = () => {
+    setSubmittedData(null);
+    localStorage.removeItem(STORAGE_KEY);
+    reset();
+  };
+
+  const handleYesSubmit = () => {
+    void handleSubmit(onSubmit)();
+  };
+
+  const handleNoSubmit = () => {
+    void handleSubmit(onSubmit)();
+  };
 
   const onSubmit: SubmitHandler<RsvpFormData> = (data) => {
-    console.log('Submitting form data:', data);
-
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -61,18 +124,35 @@ export default function RSVPForm() {
         ...data,
       }),
     })
-      .then(() => {
-        setSubmitMessage('Mulțumim! Răspunsul a fost trimis cu succes.');
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Eroare: ' + response.status);
+        }
+
+        const dataToSave = {
+          status: data.status,
+          adults: data.adults,
+          children: data.children,
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+        setSubmittedData(dataToSave);
+        formSectionRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
       })
       .catch(() => {
-        setSubmitMessage(
+        setErrorMessage(
           'A apărut o eroare la trimitere. Te rugăm să încerci din nou.',
         );
       });
   };
 
   return (
-    <section className="relative isolate overflow-hidden text-white">
+    <section
+      className="relative isolate overflow-hidden text-white"
+      ref={formSectionRef}
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-10 bg-olive-green opacity-60 mix-blend-multiply"
@@ -90,155 +170,104 @@ export default function RSVPForm() {
         ))}
       </div>
 
-      <section className="section-content relative z-20">
+      <motion.section
+        className="section-content relative z-20"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-150px' }}
+      >
         <div className="section-title">
-          <h1 className="text-white">Vom sărbători împreună?</h1>
-          <p>
+          <motion.h1 className="text-white" variants={itemVariants}>
+            Vom sărbători împreună?
+          </motion.h1>
+          <motion.p variants={itemVariants}>
             Confirmă până la <strong>22.06.2026</strong>
-          </p>
+          </motion.p>
         </div>
         <div className="section-body">
-          <div className="mt-4 flex flex-wrap gap-x-4">
-            <button
-              type="button"
-              className={`btn-outline flex-1 basis-[16rem] ${status === RSVP_YES ? 'btn-outline--active' : ''}`}
-              onClick={() => {
-                setValue('status', RSVP_YES);
-                setSubmitMessage(null);
-              }}
-            >
-              Da, voi participa!
-            </button>
-            <button
-              type="button"
-              className={`btn-outline flex-1 basis-[16rem] ${status === RSVP_NO ? 'btn-outline--active' : ''}`}
-              onClick={() => {
-                setValue('status', RSVP_NO);
-                setSubmitMessage(null);
-              }}
-            >
-              Din păcate, nu pot veni!
-            </button>
-          </div>
-
-          {status === RSVP_YES && (
-            <form
-              name={NETLIFY_FORM_NAME}
-              method="POST"
-              data-netlify="true"
-              onSubmit={handleSubmit(onSubmit)}
-              className="mt-6"
-            >
-              <input type="hidden" name="form-name" value={NETLIFY_FORM_NAME} />
-              <div className="form-number-row">
-                <div className="form-input-number">
-                  <label htmlFor="adults">Adulți</label>
-                  <input
-                    id="adults"
-                    type="number"
-                    min={1}
-                    max={5}
-                    {...register('adults', {
-                      valueAsNumber: true,
-                      required: true,
-                      min: 1,
-                      max: 5,
-                    })}
-                  />
-                </div>
-                <div className="form-input-number">
-                  <label htmlFor="children">Copii</label>
-                  <input
-                    id="children"
-                    type="number"
-                    min={0}
-                    max={5}
-                    {...register('children', {
-                      valueAsNumber: true,
-                      required: true,
-                      min: 0,
-                      max: 5,
-                    })}
-                  />
-                </div>
-              </div>
-              {fields.map((field, index) => (
-                <div
-                  key={field.id}
-                  className={fields.length > 1 ? 'mb-12' : ''}
+          {submittedData ? (
+            <motion.div initial="hidden" animate="visible">
+              <RSVPSuccess
+                key="success"
+                data={submittedData}
+                onReset={handleReset}
+              />
+            </motion.div>
+          ) : (
+            <motion.div initial="hidden" animate="visible">
+              <motion.div
+                className="mt-4 flex flex-wrap gap-x-4"
+                variants={itemVariants}
+              >
+                <Button
+                  type="button"
+                  variant="outline"
+                  className={`flex-1 basis-[16rem] ${status === RSVP_YES ? 'btn-outline--active' : ''}`}
+                  onClick={() => {
+                    setValue('status', RSVP_YES);
+                    setErrorMessage(null);
+                  }}
                 >
-                  <div className="form-input">
-                    <label htmlFor={`guests.${index}.name`}>
-                      Nume invitat {index + 1}
-                    </label>
-                    <input
-                      id={`guests.${index}.name`}
-                      placeholder="Nume și prenume"
-                      {...register(`guests.${index}.name`)}
-                    />
-                  </div>
-                  <div className="form-input">
-                    <label htmlFor={`guests.${index}.dietary`}>
-                      Preferințe alimentare
-                    </label>
-                    <input
-                      id={`guests.${index}.dietary`}
-                      placeholder="Ex: fără gluten, alergii alimentare, vegetarian, etc"
-                      {...register(`guests.${index}.dietary`)}
-                    />
-                  </div>
-                </div>
-              ))}
-              <div className="form-input">
-                <label htmlFor="song">
-                  Vreau neapărat să dansez la nuntă pe melodia
-                </label>
-                <input
-                  id="song"
-                  placeholder="Artist și nume melodie"
-                  {...register('favoriteSong')}
-                />
-              </div>
-              <div className="form-input">
-                <label htmlFor="comments">Ai un mesaj pentru noi?</label>
-                <textarea id="comments" {...register('comments')} />
-              </div>
-              <button type="submit" className="btn-solid w-full">
-                Trimite confirmarea
-              </button>
-            </form>
-          )}
+                  Da, voi participa!
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setValue('status', RSVP_NO);
+                    setErrorMessage(null);
+                  }}
+                  className={`flex-1 basis-[16rem] ${status === RSVP_NO ? 'btn-outline--active' : ''}`}
+                >
+                  Din păcate, nu pot veni!
+                </Button>
+              </motion.div>
 
-          {status === RSVP_NO && (
-            <form
-              name={NETLIFY_FORM_NAME}
-              method="POST"
-              data-netlify="true"
-              onSubmit={handleSubmit(onSubmit)}
-              className="mt-6"
-            >
-              <input type="hidden" name="form-name" value={NETLIFY_FORM_NAME} />
-              <div className="form-input">
-                <label htmlFor="name">Nume complet</label>
-                <input
-                  id="name"
-                  placeholder="Nume și prenume"
-                  {...register('guests.0.name', { required: true })}
-                />
-              </div>
-              <div className="form-input">
-                <label htmlFor="comments">Ai un mesaj pentru noi?</label>
-                <textarea id="comments" {...register('comments')} />
-              </div>
-              <button type="submit" className="btn-solid w-full">
-                Trimite răspunsul
-              </button>
-            </form>
-          )}
+              <AnimatePresence mode="wait">
+                {status === RSVP_YES && (
+                  <motion.div
+                    key="rsvp-yes-form"
+                    variants={formRevealVariants}
+                    initial="hidden"
+                    animate="visible"
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <RsvpYesForm
+                      fields={fields}
+                      register={register}
+                      errors={errors}
+                      onGuestNumberBlur={onGuestNumberBlur}
+                      onSubmit={handleYesSubmit}
+                    />
+                  </motion.div>
+                )}
 
-          {submitMessage && <p className="mt-4">{submitMessage}</p>}
+                {status === RSVP_NO && (
+                  <motion.div
+                    key="rsvp-no-form"
+                    variants={formRevealVariants}
+                    initial="hidden"
+                    animate="visible"
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <RsvpNoForm
+                      register={register}
+                      errors={errors}
+                      isSubmitting={isSubmitting}
+                      onSubmit={handleNoSubmit}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {errorMessage && (
+                <p className="mt-4 error-message">{errorMessage}</p>
+              )}
+              {/* Simulate error message */}
+            </motion.div>
+          )}
         </div>
-      </section>
+      </motion.section>
     </section>
   );
 }

@@ -21,7 +21,7 @@ const QUESTIONS = [
   },
   {
     id: 2,
-    question: 'Cine a făcut primul pas în povestea noastră?',
+    question: 'Cine a făcut primul pas?',
     options: ['Andrei', 'Ana', 'A fost reciproc'],
     correct: 2,
     funFact:
@@ -61,7 +61,7 @@ const QUESTIONS = [
     options: ['În Japonia', 'În India', 'În Islanda'],
     correct: 2,
     funFact:
-      'Ne dorim sa mergem in toate destinațiile de mai sus pe viitor, dar momentan am decis să vizităm o locație din Europa!',
+      'Ne dorim să mergem în toate destinațiile de mai sus pe viitor, dar momentan am decis să vizităm o locație din Europa!',
   },
 ];
 
@@ -147,7 +147,7 @@ export default function Quiz() {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
+      viewport={{ once: true, margin: '-160px' }}
     >
       <div className="absolute inset-0 flex-center pointer-events-none overflow-visible -z-10">
         <div className="relative w-full max-w-[800px] h-[700px]">
@@ -160,8 +160,7 @@ export default function Quiz() {
         <motion.h2 variants={itemVariants}>Quiz</motion.h2>
 
         <motion.p variants={itemVariants} className="section-description">
-          Puțină distracție înainte de marea petrecere! Oare câte detalii
-          reușești să ghicești despre noi?!
+          Oare câte detalii reușești să ghicești despre noi?!
         </motion.p>
 
         <motion.p
