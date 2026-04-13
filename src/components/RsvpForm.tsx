@@ -178,9 +178,9 @@ export default function RSVPForm() {
         viewport={{ once: true, margin: '-150px' }}
       >
         <div className="section-title">
-          <motion.h1 className="text-white" variants={itemVariants}>
+          <motion.h2 className="text-white" variants={itemVariants}>
             Vom sărbători împreună?
-          </motion.h1>
+          </motion.h2>
           <motion.p variants={itemVariants}>
             Confirmă până la <strong>22.06.2026</strong>
           </motion.p>

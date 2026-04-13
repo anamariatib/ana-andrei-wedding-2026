@@ -63,7 +63,7 @@ export default function EventSection({
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="max-w-[400px] space-y-3">
-            <h2 className="text-olive-green">{title}</h2>
+            <h3 className="text-olive-green">{title}</h3>
 
             <div
               className={`flex items-center gap-4 justify-center ${
@@ -78,9 +78,9 @@ export default function EventSection({
             </div>
 
             <div className="space-y-2">
-              <h3 className="font-serif font-bold text-dark-brown uppercase tracking-[0.2em] text-sm">
+              <h5 className="font-serif font-bold text-dark-brown uppercase tracking-[0.2em] text-sm">
                 {locationName}
-              </h3>
+              </h5>
               <p className="font-serif italic text-dark-brown/70 text-base leading-relaxed">
                 {locationDetails}
               </p>

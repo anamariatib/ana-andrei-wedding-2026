@@ -12,12 +12,13 @@ export default function Events() {
         whileInView="visible"
         viewport={{ once: true, margin: '-100px' }}
       >
-        <motion.h1 variants={itemVariants}>Evenimente</motion.h1>
+        <motion.h2 variants={itemVariants}>Evenimente</motion.h2>
         <motion.p variants={itemVariants} className="section-description">
-          Toate poveștile zilei se scriu într-un cadru natural, în{' '}
-          <strong className="text-dark-brown">Horpaz</strong>. Cununia civilă și
-          petrecerea vor avea loc în același loc, iar biserica se află la o
-          scurtă plimbare de doar 5 minute.
+          Vă invităm să ne fiți alături într-un cadru de poveste, pe malul
+          lacului <strong>Ezăreni</strong>, la <strong>Ambio Events</strong>. Ne
+          vom bucura împreună de o ceremonie în aer liber, urmată de cununia
+          religioasă la doar 5 minute de mers și apoi de petrecere într-un decor
+          autentic și plin de viață.
         </motion.p>
         <motion.p
           variants={itemVariants}

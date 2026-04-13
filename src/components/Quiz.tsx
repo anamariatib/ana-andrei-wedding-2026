@@ -41,7 +41,7 @@ const QUESTIONS = [
     options: ['La Bușteni', 'La Cluj', 'La București'],
     correct: 1,
     funFact:
-      'În prima noastră lună împreună, am plecat de 1 Decembrie să explorăm Clujul, de care ne-am îndrăgostit instantaneu.',
+      'În prima noastră lună împreună am plecat de 1 Decembrie să explorăm Clujul, de care ne-am îndrăgostit instantaneu.',
   },
   {
     id: 5,
@@ -157,7 +157,7 @@ export default function Quiz() {
       </div>
 
       <motion.div className="section-title mb-6">
-        <motion.h2 variants={itemVariants}>Quiz</motion.h2>
+        <motion.h3 variants={itemVariants}>Quiz</motion.h3>
 
         <motion.p variants={itemVariants} className="section-description">
           Oare câte detalii reușești să ghicești despre noi?!
@@ -189,7 +189,7 @@ export default function Quiz() {
                 Întrebarea {currentStep + 1} / {QUESTIONS.length}
               </p>
 
-              <h3 className="mb-8 px-10">{QUESTIONS[currentStep].question}</h3>
+              <h5 className="mb-8 px-10">{QUESTIONS[currentStep].question}</h5>
 
               <div className="flex flex-col gap-3 w-full max-w-md">
                 {QUESTIONS[currentStep].options.map((option, index) => {
@@ -259,11 +259,11 @@ export default function Quiz() {
               animate={{ opacity: 1, scale: 1 }}
               className="py-12 flex flex-col items-center text-center"
             >
-              <h2 className="text-olive-green mb-6">
+              <h3 className="text-olive-green mb-6">
                 {score <= 2 && 'Mai încearcă!'}
                 {score > 2 && score < QUESTIONS.length && 'Bravo!'}
                 {score === QUESTIONS.length && 'Perfect!'}
-              </h2>
+              </h3>
               <p className="font-serif text-lg text-dark-brown">
                 Ai știut răspunsul la <strong>{score}</strong> din{' '}
                 <strong>{QUESTIONS.length}</strong> întrebări.
