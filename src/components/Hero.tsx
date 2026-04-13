@@ -3,6 +3,7 @@ import {
   useScroll,
   useTransform,
   AnimatePresence,
+  type Transition,
 } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import Gatefold from './Gatefold';
@@ -39,7 +40,7 @@ export default function Hero() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 2.2 },
+      transition: { staggerChildren: 0.1, delayChildren: 2.2 } as Transition,
     },
   };
 
@@ -48,7 +49,7 @@ export default function Hero() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
+      transition: { duration: 0.8, ease: 'easeOut' } as Transition,
     },
   };
 

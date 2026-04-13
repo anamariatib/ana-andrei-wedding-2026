@@ -3,7 +3,12 @@ import type {
   ButtonHTMLAttributes,
   ReactNode,
 } from 'react';
-import { motion, type HTMLMotionProps, type Transition } from 'framer-motion';
+import {
+  motion,
+  type HTMLMotionProps,
+  type MotionProps,
+  type Transition,
+} from 'framer-motion';
 
 type ButtonVariant = 'solid' | 'outline';
 
@@ -12,14 +17,29 @@ type BaseButtonProps = {
   className?: string;
   iconLeft?: ReactNode;
   variant?: ButtonVariant;
-  motionProps?: HTMLMotionProps<'button'> | HTMLMotionProps<'a'>;
 };
 
+type SafeAnchorProps = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  keyof MotionProps
+>;
+
+type SafeNativeButtonProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  keyof MotionProps
+>;
+
 type LinkButtonProps = BaseButtonProps &
-  AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
+  SafeAnchorProps & {
+    href: string;
+    motionProps?: HTMLMotionProps<'a'>;
+  };
 
 type NativeButtonProps = BaseButtonProps &
-  ButtonHTMLAttributes<HTMLButtonElement> & { href?: never };
+  SafeNativeButtonProps & {
+    href?: never;
+    motionProps?: HTMLMotionProps<'button'>;
+  };
 
 type ButtonProps = LinkButtonProps | NativeButtonProps;
 
