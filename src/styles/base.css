@@ -1,0 +1,40 @@
+@layer base {
+  body {
+    @apply font-serif text-dark-brown text-sm bg-white antialiased tracking-wide;
+
+    background-image:
+      linear-gradient(rgba(250, 250, 248, 0.6), rgba(250, 250, 248, 0.6)),
+      url('/assets/paper-texture.webp');
+    background-repeat: repeat;
+  }
+
+  h1 {
+    @apply font-names leading-14 text-dark-green;
+    @apply mb-1;
+    @apply text-6xl md:text-6xl lg:text-7xl;
+  }
+
+  h2 {
+    @apply font-script leading-tight text-dark-green;
+    @apply mb-1;
+    @apply text-6xl md:text-6xl lg:text-7xl;
+  }
+
+  h3 {
+    @apply font-script leading-tight text-dark-green;
+    @apply mb-1;
+    @apply text-[52px] md:text-5xl lg:text-6xl;
+  }
+
+  h4 {
+    @apply font-serif leading-tight text-dark-brown;
+    @apply mb-1;
+    @apply text-lg md:text-xl lg:text-2xl;
+  }
+
+  h5 {
+    @apply font-serif leading-tight text-dark-brown;
+    @apply mb-1;
+    @apply text-base md:text-lg lg:text-xl;
+  }
+}

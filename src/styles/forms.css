@@ -1,0 +1,84 @@
+@layer components {
+  .form-number-row {
+    @apply flex-center gap-x-4;
+  }
+
+  .form-input-number {
+    @apply w-24;
+  }
+
+  .form-input-number label {
+    @apply mb-1 block text-center text-xs uppercase tracking-wide text-white;
+  }
+
+  .form-input-number input[type='number'] {
+    @apply w-full appearance-none border-0 border-b-2 border-cream bg-transparent pb-1 text-center text-xl text-white duration-300 focus:border-olive-green/50 focus:outline-none;
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  .form-input-number input[type='number']::-webkit-outer-spin-button,
+  .form-input-number input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .form-input {
+    @apply w-full mt-8;
+  }
+
+  .form-input label {
+    @apply mb-1 block text-left font-serif;
+  }
+
+  .form-input input,
+  .form-input textarea {
+    @apply w-full appearance-none border-0 border-b-2 border-white bg-transparent px-0 py-2 text-left text-white placeholder:text-white/40 focus:border-olive-green/50 focus:outline-none duration-300;
+  }
+
+  .form-input textarea {
+    @apply min-h-12 resize-y;
+  }
+
+  .form-radio-group {
+    @apply mt-8;
+  }
+
+  .form-radio-legend {
+    @apply mb-3 block font-serif text-left text-white;
+  }
+
+  .form-radio-options {
+    @apply flex flex-wrap gap-3;
+  }
+
+  .form-radio-option {
+    @apply relative;
+  }
+
+  .form-radio-input {
+    @apply sr-only;
+  }
+
+  .form-radio-label {
+    @apply inline-flex min-w-24 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/6 px-5 py-2 text-sm tracking-wide text-white/80 transition-all duration-300;
+  }
+
+  .form-radio-input:focus-visible + .form-radio-label {
+    @apply outline-none;
+  }
+
+  .form-radio-input:checked + .form-radio-label {
+    @apply border-cream-darker bg-cream/20;
+  }
+
+  /* Errors */
+
+  .error-message {
+    @apply text-left block text-deep-red text-[10px] uppercase mt-2 tracking-widest animate-pulse;
+  }
+
+  .legend-error {
+    @apply text-deep-red duration-300;
+  }
+}

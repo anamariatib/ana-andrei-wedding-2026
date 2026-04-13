@@ -1,0 +1,39 @@
+@utility wrapper {
+  @apply overflow-hidden;
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility section-wrapper {
+  @apply mx-auto text-center overflow-hidden pt-16;
+}
+
+@utility section-title {
+  @apply max-w-2xl mx-auto text-center overflow-hidden px-10;
+}
+
+@utility section-description {
+  @apply leading-loose font-serif italic text-dark-brown/70 text-base;
+}
+
+@utility section-content {
+  @apply max-w-2xl mx-auto py-16 px-6 text-center overflow-hidden;
+}
+
+@utility section-body {
+  @apply w-[90%] mx-auto;
+}
+
+@utility watercolor-mask {
+  mask-image: url('/assets/watercolor-splash.svg');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+
+  -webkit-mask-image: url('/assets/watercolor-splash.svg');
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}

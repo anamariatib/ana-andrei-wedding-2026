@@ -1,0 +1,23 @@
+@theme {
+  --color-*: initial;
+  --color-white: #fafaf8;
+  --color-cream: #f1d7bb;
+  --color-cream-darker: #e5b997;
+  --color-rose: #e7aba9;
+  --color-light-green: #b4c894;
+  --color-olive-green: #638b3f;
+  --color-dark-green: #557735;
+  --color-dark-brown: #613c35;
+  --color-deep-red: #ae2929;
+
+  --font-script: 'Kathiega', sans-serif;
+  --font-script-swash: 'Kathiega Swash', sans-serif;
+  --font-serif: 'Libre Baskerville', serif;
+  --font-names: 'High Spirited', sans-serif;
+
+  --image-white-peony: url('/assets/white-peony.webp');
+  --image-white-rose: url('/assets/white-rose.webp');
+}
+
+@variant tall (@media (min-height: 768px));
+@variant short (@media (max-height: 767px));
