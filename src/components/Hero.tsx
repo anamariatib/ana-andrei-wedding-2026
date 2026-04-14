@@ -73,7 +73,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.8, duration: 1.5, ease: 'easeOut' }}
-          className="relative w-72 h-[380px] md:w-[450px] md:h-[60%] max-h-[600px] z-30 group"
+          className="relative w-72 h-[350px] md:w-[450px] md:h-[60%] max-h-[600px] short:max-h-[320px] z-30 group"
         >
           <img
             src="/assets/flower-group-top.webp"
@@ -85,9 +85,9 @@ export default function Hero() {
             src="/assets/flower-group-bottom.webp"
             alt=""
             aria-hidden="true"
-            className="absolute -bottom-25 -left-18 w-45 md:w-60 z-40 rotate-[9deg]"
+            className="absolute -bottom-25 -left-12 w-45 md:w-60 z-40 rotate-[9deg]"
           />
-          <div className="w-full h-full overflow-hidden rounded-t-full rounded-b-[200px] border-[12px] border-cream-darker shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+          <div className="w-full h-full overflow-hidden rounded-t-full rounded-b-[200px] border-[10px] md:border-[12px] border-cream-darker shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
             <motion.img
               src="/assets/couple.png"
               alt="Andrei & Ana-Maria"
@@ -113,10 +113,10 @@ export default function Hero() {
           </div>
 
           <div className="md:hidden overflow-hidden mb-8 short:mb-6">
-            {['Andrei', '&', 'Ana-Maria'].map((name) => (
+            {['Andrei', '&', 'Ana-Maria'].map((name, index) => (
               <motion.h1
                 key={name}
-                className="font-names text-olive-green leading-12 short:text-5xl"
+                className={`font-names text-olive-green ${index === 1 ? 'text-4xl leading-4' : 'text-5xl leading-12'}`}
                 variants={letterVariants}
               >
                 {name}

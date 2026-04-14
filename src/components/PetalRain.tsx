@@ -27,7 +27,7 @@ const PetalRain = () => {
           key={p.id}
           src="/assets/leaf1.png"
           initial={{
-            y: '-10vh', // Folosim y pentru performanță (GPU)
+            y: '-10vh',
             x: `${p.startX}vw`,
             opacity: 0,
             scale: p.scale,
