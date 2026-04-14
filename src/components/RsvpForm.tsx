@@ -178,7 +178,10 @@ export default function RSVPForm() {
         viewport={{ once: true, margin: '-150px' }}
       >
         <div className="section-title">
-          <motion.h2 className="text-white" variants={itemVariants}>
+          <motion.h2
+            className="text-white leading-12 md:leading-tight"
+            variants={itemVariants}
+          >
             Vom sărbători împreună?
           </motion.h2>
           <motion.p variants={itemVariants}>

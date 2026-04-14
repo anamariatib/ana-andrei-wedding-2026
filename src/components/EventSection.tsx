@@ -34,7 +34,7 @@ export default function EventSection({
           className="relative w-full flex justify-center min-[850px]:w-[60%]"
           initial={{ opacity: 0, x: isImageLeft ? -40 : 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: '-180px' }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
           {/* Decor de fundal (Splash) */}
