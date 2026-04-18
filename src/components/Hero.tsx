@@ -2,30 +2,13 @@ import {
   motion,
   useScroll,
   useTransform,
-  AnimatePresence,
   type Transition,
 } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import Gatefold from './Gatefold';
+import { useRef } from 'react';
 import PetalRain from './PetalRain';
 
 export default function Hero() {
-  const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
-
-  const handleOpen = () => setIsOpen(true);
-
-  useEffect(() => {
-    if (!isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -40,7 +23,7 @@ export default function Hero() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 2.2 } as Transition,
+      transition: { staggerChildren: 0.1, delayChildren: 0.4 } as Transition,
     },
   };
 
@@ -56,11 +39,8 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      onClick={handleOpen}
-      className={`relative h-screen w-full overflow-hidden ${!isOpen ? 'cursor-pointer' : ''}`}
+      className="relative h-screen w-full overflow-hidden"
     >
-      <Gatefold key="wedding-gate" isOpen={isOpen} />
-
       <motion.div
         style={{ opacity: opacityMain }}
         className="relative h-full w-full flex flex-col items-center justify-center px-8"
@@ -72,7 +52,7 @@ export default function Hero() {
           style={{ y: yCouple, scale: scaleImage }}
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.8, duration: 1.5, ease: 'easeOut' }}
+          transition={{ duration: 1.6, ease: 'easeOut' }}
           className="relative w-72 h-[350px] md:w-[450px] md:h-[60%] max-h-[600px] short:max-h-[320px] z-30 group"
         >
           <img
@@ -85,11 +65,11 @@ export default function Hero() {
             src="/assets/flower-group-bottom.webp"
             alt=""
             aria-hidden="true"
-            className="absolute -bottom-25 -left-12 w-45 md:w-60 z-40 rotate-[9deg]"
+            className="absolute -bottom-20 -left-10 md:-left-10 w-45 md:w-60 z-40"
           />
-          <div className="w-full h-full overflow-hidden rounded-t-full rounded-b-[200px] border-[10px] md:border-[12px] border-cream-darker shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+          <div className="w-full h-full overflow-hidden rounded-t-full rounded-b-full  shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
             <motion.img
-              src="/assets/couple.png"
+              src="/assets/couple-green.webp"
               alt="Andrei & Ana-Maria"
               className="w-full h-full object-cover object-top"
             />
@@ -133,50 +113,44 @@ export default function Hero() {
         </motion.div>
 
         {/* INDICATOR SCROLL */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-              className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:hidden z-50 short:hidden"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.scrollTo({
-                  top: window.innerHeight,
-                  behavior: 'smooth',
-                });
-              }}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:hidden z-50 short:hidden"
+          onClick={() => {
+            window.scrollTo({
+              top: window.innerHeight,
+              behavior: 'smooth',
+            });
+          }}
+        >
+          <span className="font-serif text-[10px] tracking-[0.2em] uppercase text-dark-brown/50">
+            Vezi detalii
+          </span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="text-olive-green/60"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <span className="font-serif text-[10px] tracking-[0.2em] uppercase text-dark-brown/50">
-                Vezi detalii
-              </span>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="text-olive-green/60"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
-                </svg>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+            </svg>
+          </motion.div>
+        </motion.div>
       </motion.div>
     </section>
   );

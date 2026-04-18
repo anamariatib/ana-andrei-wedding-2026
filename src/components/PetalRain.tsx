@@ -25,7 +25,7 @@ const PetalRain = () => {
       {petals.map((p) => (
         <motion.img
           key={p.id}
-          src="/assets/leaf1.png"
+          src="/assets/leaf.webp"
           initial={{
             y: '-10vh',
             x: `${p.startX}vw`,
