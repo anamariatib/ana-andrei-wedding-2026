@@ -23,7 +23,9 @@ export default function Hero() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.4 } as Transition,
+      transition: {
+        delay: 1,
+      } as Transition,
     },
   };
 
@@ -32,7 +34,6 @@ export default function Hero() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' } as Transition,
     },
   };
 
@@ -92,17 +93,19 @@ export default function Hero() {
             </motion.h2>
           </div>
 
-          <div className="md:hidden overflow-hidden mb-8 short:mb-6">
+          <motion.div
+            className="md:hidden overflow-hidden mb-8 short:mb-6"
+            variants={letterVariants}
+          >
             {['Andrei', '&', 'Ana-Maria'].map((name, index) => (
               <motion.h1
                 key={name}
                 className={`font-names text-olive-green ${index === 1 ? 'text-4xl leading-4' : 'text-5xl leading-12'}`}
-                variants={letterVariants}
               >
                 {name}
               </motion.h1>
             ))}
-          </div>
+          </motion.div>
 
           <motion.p
             variants={letterVariants}
@@ -116,8 +119,8 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:hidden z-50 short:hidden"
+          transition={{ delay: 1, duration: 0.8 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:hidden z-50 short:hidden"
           onClick={() => {
             window.scrollTo({
               top: window.innerHeight,
@@ -125,9 +128,6 @@ export default function Hero() {
             });
           }}
         >
-          <span className="font-serif text-[10px] tracking-[0.2em] uppercase text-dark-brown/50">
-            Vezi detalii
-          </span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{

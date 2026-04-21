@@ -19,5 +19,5 @@
   --image-white-rose: url('/assets/white-rose.webp');
 }
 
-@variant tall (@media (min-height: 670px));
-@variant short (@media (max-height: 669px));
+@variant tall (@media (min-height: 700px));
+@variant short (@media (max-height: 699px));
