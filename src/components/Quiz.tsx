@@ -238,7 +238,7 @@ export default function Quiz() {
                       animate={{ opacity: 1, scale: 1 }}
                       className="flex flex-col items-center text-center max-w-sm"
                     >
-                      <p className="text-base italic text-dark-brown/60 mb-8 leading-relaxed">
+                      <p className="text-base italic mb-8 leading-relaxed">
                         {QUESTIONS[currentStep].funFact}
                       </p>
 

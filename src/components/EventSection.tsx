@@ -29,7 +29,7 @@ export default function EventSection({
           isImageLeft ? 'min-[850px]:flex-row' : 'min-[850px]:flex-row-reverse'
         }`}
       >
-        {/* --- ZONA IMAGINE --- */}
+        {/*  PICTURE  */}
         <motion.div
           className="relative w-full flex justify-center min-[850px]:w-[60%]"
           initial={{ opacity: 0, x: isImageLeft ? -40 : 40 }}
@@ -37,10 +37,8 @@ export default function EventSection({
           viewport={{ once: true, margin: '-180px' }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          {/* Decor de fundal (Splash) */}
           <div className="absolute inset-0 bg-cream-darker/20 watercolor-mask scale-110 rotate-6 blur-sm pointer-events-none" />
 
-          {/* Container Imagine */}
           <div className="relative w-[350px] sm:w-[400px] min-[850px]:w-[500px] aspect-square watercolor-mask overflow-hidden shadow-sm">
             <img
               src={imageUrl}
@@ -50,7 +48,7 @@ export default function EventSection({
           </div>
         </motion.div>
 
-        {/* --- ZONA TEXT --- */}
+        {/*  TEXT AREA  */}
         <motion.div
           className={`w-full min-[850px]:w-[40%] flex flex-col gap-6 ${
             isImageLeft
@@ -81,7 +79,7 @@ export default function EventSection({
               <h5 className="font-serif font-bold text-dark-brown uppercase tracking-[0.2em] text-sm">
                 {locationName}
               </h5>
-              <p className="font-serif italic text-dark-brown/70 text-base leading-relaxed">
+              <p className="font-serif italic opacity-70 text-base leading-relaxed">
                 {locationDetails}
               </p>
             </div>

@@ -15,7 +15,7 @@
 }
 
 @utility section-description {
-  @apply leading-loose font-serif italic text-dark-brown/70 text-base;
+  @apply leading-loose font-serif italic text-dark-brown text-base;
 }
 
 @utility section-content {

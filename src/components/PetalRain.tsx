@@ -3,21 +3,26 @@ import { motion } from 'framer-motion';
 
 const PetalRain = () => {
   const petals = useMemo(() => {
-    return Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      startX: Math.random() * 100,
-      xDrift: [
-        `${Math.random() * 20 - 10}px`,
-        `${Math.random() * 40 - 20}px`,
-        `${Math.random() * 20 - 10}px`,
-      ],
-      duration: 10 + Math.random() * 10,
-      delay: Math.random() * -20,
-      scale: 0.4 + Math.random() * 0.7,
-      initialRotate: Math.random() * 360,
-      rotationSpeed: Math.random() > 0.5 ? 360 : -360,
-      blur: i % 4 === 0 ? '1.5px' : '0px',
-    }));
+    return Array.from({ length: 20 }, (_, i) => {
+      const startX = Math.random() * 100;
+      const driftOffsets = [
+        Math.random() * 20 - 10,
+        Math.random() * 40 - 20,
+        Math.random() * 20 - 10,
+      ];
+      return {
+        id: i,
+        startX,
+        driftOffsets, // numeric offsets
+        xKeyframes: driftOffsets.map((d) => startX + d / 100), // convert to vw offsets
+        duration: 10 + Math.random() * 10,
+        delay: Math.random() * -20,
+        scale: 0.4 + Math.random() * 0.7,
+        initialRotate: Math.random() * 360,
+        rotationSpeed: Math.random() > 0.5 ? 360 : -360,
+        blur: i % 4 === 0 ? '1.5px' : '0px',
+      };
+    });
   }, []);
 
   return (
@@ -35,7 +40,7 @@ const PetalRain = () => {
           }}
           animate={{
             y: '110vh',
-            x: p.xDrift.map((d) => `calc(${p.startX}vw + ${d})`),
+            x: p.xKeyframes.map((kf) => `${kf}vw`),
             rotate: p.initialRotate + p.rotationSpeed,
             rotateX: [0, 180, 360],
             opacity: [0, 0.6, 0.6, 0],

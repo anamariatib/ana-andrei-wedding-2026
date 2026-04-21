@@ -106,7 +106,7 @@ export default function Hero() {
 
           <motion.p
             variants={letterVariants}
-            className="font-serif tracking-[0.4em] uppercase text-xs md:text-sm text-dark-brown/70 short:text-[10px]"
+            className="font-serif tracking-[0.4em] uppercase text-xs md:text-sm short:text-[10px]"
           >
             Duminică, 12 Iulie 2026 • Iași
           </motion.p>

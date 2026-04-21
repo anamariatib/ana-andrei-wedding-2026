@@ -14,7 +14,7 @@ export default function Events() {
       >
         <motion.h2 variants={itemVariants}>Evenimente</motion.h2>
         <motion.p variants={itemVariants} className="section-description">
-          Vă invităm să ne fiți alături într-un cadru de poveste, pe malul
+          Vă așteptăm să ne fiți alături într-un cadru de poveste, pe malul
           lacului <strong>Ezăreni</strong>, la <strong>Ambio Events</strong>. Ne
           vom bucura împreună de o ceremonie în aer liber, urmată de cununia
           religioasă la doar 5 minute de mers și apoi de petrecere într-un decor

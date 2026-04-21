@@ -7,6 +7,7 @@ import Gatefold from './components/Gatefold';
 import Hero from './components/Hero';
 import Quiz from './components/Quiz';
 import RSVPForm from './components/RsvpForm';
+import Family from './components/Family';
 
 function App() {
   const [isGatefoldOpen, setIsGatefoldOpen] = useState(false);
@@ -33,14 +34,14 @@ function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 1.8, ease: 'easeOut' }}
+          className="wrapper"
         >
-          <div className="wrapper">
-            <Hero />
-            <Events />
-            <RSVPForm />
-            <Quiz />
-            <Footer />
-          </div>
+          <Hero />
+          <Family />
+          <Events />
+          <RSVPForm />
+          <Quiz />
+          <Footer />
         </motion.div>
       )}
 
