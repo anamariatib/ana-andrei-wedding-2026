@@ -79,6 +79,8 @@ export default function RSVPForm() {
   }, [status, clearErrors]);
 
   useEffect(() => {
+    if (!adults) return;
+
     const currentGuests = getValues('guests') || [];
     const totalGuests = Math.max(1, Math.min(5, adults));
 
@@ -99,6 +101,7 @@ export default function RSVPForm() {
     const minValue = fieldId === 'adults' ? 1 : 0;
     if (Number.isNaN(val) || val < minValue) setValue(fieldId, minValue);
     if (val > 5) setValue(fieldId, 5);
+    clearErrors(fieldId);
   };
 
   const handleReset = () => {

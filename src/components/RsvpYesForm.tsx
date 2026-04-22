@@ -47,14 +47,14 @@ export default function RsvpYesForm({
             {...register('adults', {
               onBlur: onGuestNumberBlur,
               valueAsNumber: true,
-              required: 'Număr între 1 și 5',
+              required: 'Min 1 - Max 5',
               min: {
                 value: 1,
-                message: 'Număr între 1 și 5',
+                message: 'Min 1 - Max 5',
               },
               max: {
                 value: 5,
-                message: 'Număr între 1 și 5',
+                message: 'Min 1 - Max 5',
               },
             })}
           />
@@ -72,14 +72,14 @@ export default function RsvpYesForm({
             {...register('children', {
               onBlur: onGuestNumberBlur,
               valueAsNumber: true,
-              required: 'Număr între 0 și 5',
+              required: 'Min 0 - Max 5',
               min: {
                 value: 0,
-                message: 'Număr între 0 și 5',
+                message: 'Min 0 - Max 5',
               },
               max: {
                 value: 5,
-                message: 'Număr între 0 și 5',
+                message: 'Min 0 - Max 5',
               },
             })}
           />

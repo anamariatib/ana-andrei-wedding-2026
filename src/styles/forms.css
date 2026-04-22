@@ -1,6 +1,6 @@
 @layer components {
   .form-number-row {
-    @apply flex-center gap-x-4;
+    @apply flex justify-center items-start gap-x-4;
   }
 
   .form-input-number {
