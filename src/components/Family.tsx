@@ -106,7 +106,7 @@ export default function Family() {
             <p className="italic mb-6 ">și nașii,</p>
             <div>
               <p className="font-serif text-sm uppercase tracking-widest">
-                Laura & Fabian
+                Fabian & Laura
               </p>
               <p className="font-names text-4xl">Kuberski</p>
             </div>
